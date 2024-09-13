@@ -1,3 +1,5 @@
+from datetime import date, timedelta # для пошуку днів народження
+
 from sqlalchemy.orm import Session
 from .contact_model import Contact
 from ..schemas import ContactBase
@@ -7,7 +9,7 @@ def get_one_contact(db: Session, contact_id: int): # отримати конта
     return db.query(Contact).filter(Contact.id == contact_id).first()
 
 
-def get_contacts(db: Session, first_name: str = None, last_name: str = None, email: str = None): # вивести список всіх контактів
+def get_contacts(db: Session, first_name: str = None, last_name: str = None, email: str = None): # вивести список всіх контактів чи для пошуку за іменем, прізвищем чи ємейлом
     query = db.query(Contact)
     if first_name:
         query = query.filter(Contact.first_name.ilike(f"%{first_name}%"))
@@ -36,3 +38,14 @@ def delete_contact(db: Session, contact_id: int): # для видалення к
 def get_contact_by_id(db: Session, contact_id: int): # отримати контакт для оновлення даних
     return db.query(Contact).filter(Contact.id == contact_id).first()
 
+
+def get_contacts_with_upcoming_birthdays(db: Session): # для пошуку днів народж. у найбл. 7 днів
+    today = date.today()
+    upcoming = today + timedelta(days=7)
+
+    # порівнюємо лише місяць і день, бо рік народження не має значення для майбутнього ДН
+    contacts = db.query(Contact).filter(
+        (Contact.birthday >= today) & (Contact.birthday <= upcoming)
+    ).all()
+    
+    return contacts

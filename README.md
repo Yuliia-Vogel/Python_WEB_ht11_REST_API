@@ -13,7 +13,7 @@
 6. Follow link appeared at your terminal, usually it is http://127.0.0.1:8000
 
 7. You will be redirected to web-browser window via http://127.0.0.1:8000 link, and if everything is Ok,
-the hellowing json will be shown.
+the greeting json will be shown.
 
 8. Swagger automatically generated documentation for all API endpoints, please see the link http://127.0.0.1:8000/docs
 
@@ -38,11 +38,13 @@ the hellowing json will be shown.
 10. Delete and update contacts could be performed also via endpoint (in Swagger or Postman), or directly in 
   table in database using pgAdmin.
 
-11. 
+11. Search for contact by first name, last name or email could be performed using the type of link:
+  http://127.0.0.1:8000/api/contacts/?email=richi@example.com 
+
+12. To receive a list of upcomming birthdays in the closest 7 days, follow the link http://127.0.0.1:8000/api/contacts/birthdays
 
 
   
 
 
-створення нових контактів зазвичай відбувається через HTTP-запит типу POST
 
